@@ -43,7 +43,7 @@ def padding_oracle_attack(ciphertext, iv):
             for byte_val in range(256):
                 XJ[byte_idx] = byte_val
                 if call_oracle(block_ciphertext, XJ):
-                    print(f"[+] Found valid byte {byte_idx} in block {i}: {hex(byte_val)}")
+                    # print(f"[+] Found valid byte {byte_idx} in block {i}: {hex(byte_val)}")
                     break
 
             # Step 2: Recover plaintext byte at byte_idx in P2
