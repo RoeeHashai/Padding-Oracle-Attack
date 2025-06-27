@@ -9,10 +9,11 @@ def xor(a, b, c):
     """
     return bytes([a ^ b ^ c])
 
-def call_oracle(ciphertext, iv):
+def call_oracle(ciphertext):
     """
     Calls external oracle.py and returns True if padding is valid (oracle returns 1), else False
     """
+    iv = bytes([0] * DES.block_size)
     result = subprocess.run(
         [sys.executable, "oracle.py", ciphertext.hex(), iv.hex()],
         stdout=subprocess.PIPE,
@@ -43,7 +44,7 @@ def padding_oracle_attack(ciphertext, iv):
             # Step 1: Brute-force byte at byte_idx in XJ
             for byte_val in range(256):
                 XJ_C2[byte_idx] = byte_val
-                if call_oracle(XJ_C2, iv):
+                if call_oracle(XJ_C2):
                     print(f"[+] Found valid byte {byte_idx} in block {i}: {hex(byte_val)}")
                     break
 
